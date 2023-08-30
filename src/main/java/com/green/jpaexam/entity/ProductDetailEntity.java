@@ -17,12 +17,16 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class ProductDetailEntity extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "BIGINT UNSIGNED")
-    private Long id;
+    private Long number;
 
-    @Column
+    @OneToOne
+    @MapsId
+    @JoinColumn(updatable = false, nullable = false, name = "product_number", columnDefinition = "BIGINT UNSIGNED")
+    private ProductEntity productEntity;
+
     private String description;
+
+
 
 
 }

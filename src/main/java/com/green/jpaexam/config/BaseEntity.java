@@ -14,6 +14,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @MappedSuperclass
@@ -30,6 +31,10 @@ public class BaseEntity {
     @UpdateTimestamp
     //@LastModifiedDate //스프링에서 제공, @UpdateTimestamp와 같은기능
     private LocalDateTime updatedAt;
+
+    public String getCreatedAtDatetime() {
+     return createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"));
+    }
 
 
 }

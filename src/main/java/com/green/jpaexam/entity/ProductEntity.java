@@ -4,11 +4,6 @@ import com.green.jpaexam.config.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.security.Provider;
-import java.time.LocalDateTime;
 
 @Data
 @Table(name = "t_product")
@@ -21,6 +16,7 @@ import java.time.LocalDateTime;
 public class ProductEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "BIGINT UNSIGNED")
     private Long number;
 
     @Column(nullable = false)
@@ -45,5 +41,19 @@ public class ProductEntity extends BaseEntity {
     private ProviderEntity providerEntity;
     //지금 우리의 느낌으로는 private Long providerId 라고 적어야할 것 같지만,
     //jpa는 객체지향적으로 처리를 하기 때문에 얘가 포함된 객체 기준으로 가져옵니다.
+
+//    @OneToOne(mappedBy = "productEntity")
+//    private ProductDetailEntity productDetailEntity;
+
+    @ManyToOne
+    @JoinColumn(name= "category_id")
+    @ToString.Exclude
+    private CategoryEntity categoryEntity;
+
+
+
+
+
+
 
 }

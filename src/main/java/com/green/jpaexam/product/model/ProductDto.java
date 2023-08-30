@@ -10,4 +10,8 @@ public class ProductDto {
     private final int price;
     private final int stock;
 
+    private final Long providerId;
+    private final Long categoryId;
+    private final String description;
+
 }
