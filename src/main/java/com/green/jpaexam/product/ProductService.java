@@ -26,7 +26,40 @@ public class ProductService {
     private final CategoryRepository categoryRep;
     private final ProviderRepository providerRep;
 
-    public ProductRes saveProduct(ProductDto dto){
+    public ProductRes saveProduct2(ProductDto dto){
+
+        //서로서로 연결해서
+        CategoryEntity categoryEntity = categoryRep.findById(dto.getCategoryId()).get();
+        ProviderEntity providerEntity = providerRep.findById(dto.getProviderId()).get();
+
+        ProductDetailEntity productDetailEntity = ProductDetailEntity.builder()
+                .description(dto.getDescription())
+                .build();
+
+
+        ProductEntity productEntity = ProductEntity.builder()
+                .name(dto.getName())
+                .price(dto.getPrice())
+                .stock(dto.getStock())
+
+                .categoryEntity(categoryEntity)
+                .providerEntity(providerEntity)
+
+                .build();
+
+        productEntity.setProductDetailEntity(productDetailEntity);
+        //productDetailEntity.setProductEntity(productEntity); 프로덕트엔티티에 맨 마지막 setProductEtailEntity
+        //라는 메소드를 추가했기 때문에 프로덕트엔티티에서 한꺼번에 연결 가능하게 되어서, 서로 연결할 필요 없어서 이 줄은 없어도 된다
+
+
+        productRep.save(productEntity);
+
+        return null;//이걸로 인서트 두개 다 되는지 확인해봅시다
+    }
+
+
+
+    public ProductRes saveProduct1(ProductDto dto){
         CategoryEntity categoryEntity = categoryRep.findById(dto.getCategoryId()).get();
         ProviderEntity providerEntity = providerRep.findById(dto.getProviderId()).get();
         //find 하는 순간 영속성으로 관리가 됨

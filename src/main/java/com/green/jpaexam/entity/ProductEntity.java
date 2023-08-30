@@ -42,13 +42,27 @@ public class ProductEntity extends BaseEntity {
     //지금 우리의 느낌으로는 private Long providerId 라고 적어야할 것 같지만,
     //jpa는 객체지향적으로 처리를 하기 때문에 얘가 포함된 객체 기준으로 가져옵니다.
 
-//    @OneToOne(mappedBy = "productEntity")
-//    private ProductDetailEntity productDetailEntity;
+    @OneToOne(mappedBy = "productEntity", cascade = { CascadeType.PERSIST})
+    //캐스케이드REMOVE 하면 관련된 애가 다 삭제됨, orphanRemoval-true 도 비슷함
+    //PERSIST 가 거의 왠만한역할을 다 하는거같은데,, 더알아보고 알려줄게요(도흠샘) ㅠ
+    //영속성 전의는 양방향 일 때만 됩니다
+    private ProductDetailEntity productDetailEntity;
 
     @ManyToOne
     @JoinColumn(name= "category_id")
     @ToString.Exclude
     private CategoryEntity categoryEntity;
+
+
+    //프로덕트 서비스에서 saveProduct2 의 경우는 프로덕트엔터티와 디테일엔터티를 둘다 서로 연결하고 있는데, 이 메소드가 있으면 굳이
+    //두개 다 에서 연결할 필요 없이, 프로덕트엔티티테이블에서 한꺼번에 연결이 가능 하다
+    public void setProductDetailEntity(ProductDetailEntity productDetailEntity) {
+        if(this.productDetailEntity != null) {
+            this.productDetailEntity.setProductEntity(null);
+        } //만약에 프로덕트디테일엔터티에 값이 있으면 그 값을 지우고(null) 아래를 실행한다
+        this.productDetailEntity = productDetailEntity;
+        this.productDetailEntity.setProductEntity(this);
+    }
 
 
 
