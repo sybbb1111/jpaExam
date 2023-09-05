@@ -43,6 +43,7 @@ public class ProductEntity extends BaseEntity {
     //jpa는 객체지향적으로 처리를 하기 때문에 얘가 포함된 객체 기준으로 가져옵니다.
 
     @OneToOne(mappedBy = "productEntity", cascade = { CascadeType.PERSIST})
+    @ToString.Exclude
     //캐스케이드REMOVE 하면 관련된 애가 다 삭제됨, orphanRemoval-true 도 비슷함
     //PERSIST 가 거의 왠만한역할을 다 하는거같은데,, 더알아보고 알려줄게요(도흠샘) ㅠ
     //영속성 전의는 양방향 일 때만 됩니다

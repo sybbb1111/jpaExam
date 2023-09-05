@@ -2,8 +2,10 @@ package com.green.jpaexam.product;
 
 import com.green.jpaexam.product.model.ProductDto;
 import com.green.jpaexam.product.model.ProductRes;
+import com.green.jpaexam.product.model.ProductResQdsl;
 import com.green.jpaexam.product.model.ProductUpdDto;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -32,6 +34,23 @@ public class ProductController {
         //참고로 이거는 쿼리스트링만 됨
         return ResponseEntity.ok(service.getProductAll(page)); //200, ok
     }
+
+    @GetMapping("/jpql")
+    public ResponseEntity<List<ProductRes>> getProductAllJpql(
+            @PageableDefault(sort="number", direction = Sort.Direction.DESC, size = 20) Pageable page) {
+        return ResponseEntity.ok(service.getProductAllJpql(page));
+    }
+
+
+    @GetMapping("/qdsl")
+    public ResponseEntity<List<ProductResQdsl>> getProductAllQdsl(
+            @ParameterObject
+            @PageableDefault(page = 0, sort="number", direction = Sort.Direction.DESC, size = 20)
+            Pageable page) {
+        return ResponseEntity.ok(service.getProductAllQdsl(page));
+    }
+
+
 
     @GetMapping("/{number}")
     public ResponseEntity<ProductRes> getProduct(@PathVariable Long number) {

@@ -2,10 +2,7 @@ package com.green.jpaexam.entity;
 
 import com.green.jpaexam.config.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
@@ -27,6 +24,7 @@ public class ProviderEntity extends BaseEntity {
 
     private String name;
 
+    @Builder.Default
     @OneToMany(mappedBy = "providerEntity", cascade = CascadeType.PERSIST) //mappedBy를 적어주면 이상한 테이블 하나 더 안만들어지고
     // 캐스케이드=영속성전이!! 프로바이더에 값넣을 때 만약에 그 프로바이더에 해당하는 물품있을경우 물품까지 같이 인서트됨!!
     //그대로 연결해서 쓸 수 있어요, 그니까 거의 필수겠죠?

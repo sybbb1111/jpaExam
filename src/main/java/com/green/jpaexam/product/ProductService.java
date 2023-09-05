@@ -8,15 +8,19 @@ import com.green.jpaexam.entity.ProviderEntity;
 import com.green.jpaexam.product.model.ProductDto;
 import com.green.jpaexam.entity.ProductEntity;
 import com.green.jpaexam.product.model.ProductRes;
+import com.green.jpaexam.product.model.ProductResQdsl;
 import com.green.jpaexam.product.model.ProductUpdDto;
 import com.green.jpaexam.provider.ProviderRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -25,6 +29,8 @@ public class ProductService {
     private final ProductDetailRepository productDetailRep;
     private final CategoryRepository categoryRep;
     private final ProviderRepository providerRep;
+
+    private final ProductQdsl qdsl;
 
     public ProductRes saveProduct2(ProductDto dto){
 
@@ -94,7 +100,7 @@ public class ProductService {
 
                 .description(detailEntity.getDescription())
 
-                .createdAt(productEntity.getCreatedAt().toString())
+                //.createdAt(productEntity.getCreatedAt().toString())
 
                 .build();
 
@@ -125,4 +131,22 @@ public class ProductService {
         dao.delProduct(number);
 
     }
+
+
+    public List<ProductRes> getProductAllJpql(Pageable page) {
+        List<ProductRes> list = productRep.selProductAll("상품줘2", 70000, page);
+//        for(ProductEntity e : list) {
+//            log.info("item : {}", e);
+//        }
+        return list;
+    }
+
+    public List<ProductResQdsl> getProductAllQdsl(Pageable page) {
+        List<ProductResQdsl> list = qdsl.selProductAll(page);
+
+
+        return list;
+    }
+
+
 }
