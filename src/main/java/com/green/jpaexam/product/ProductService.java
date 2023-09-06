@@ -141,11 +141,10 @@ public class ProductService {
         return list;
     }
 
-    public List<ProductResQdsl> getProductAllQdsl(Pageable page) {
-        List<ProductResQdsl> list = qdsl.selProductAll(page);
+    public List<ProductResQdsl> getProductAllQdsl(Pageable pageable, String search) {
+        return qdsl.selProductAll(pageable, search);
 
 
-        return list;
     }
 
 

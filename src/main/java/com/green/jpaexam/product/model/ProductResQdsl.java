@@ -17,4 +17,7 @@ public class ProductResQdsl {
     private String providerNm;
 
     private LocalDateTime createdAt;
+
+
+    private Long totalCnt;
 }

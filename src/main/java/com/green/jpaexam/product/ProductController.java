@@ -46,8 +46,11 @@ public class ProductController {
     public ResponseEntity<List<ProductResQdsl>> getProductAllQdsl(
             @ParameterObject
             @PageableDefault(page = 0, sort="number", direction = Sort.Direction.DESC, size = 20)
-            Pageable page) {
-        return ResponseEntity.ok(service.getProductAllQdsl(page));
+                                        Pageable page   ,
+                                        @RequestParam(required = false) String search) {
+        //위 처럼 검색어 search하나가 필수값이 아니게하고싶을 때는 리퀘스트파람 써도되지만
+        //객체로 받을 때는 리퀘스트파람 쓰면 안된다
+        return ResponseEntity.ok(service.getProductAllQdsl(page, search));
     }
 
 
